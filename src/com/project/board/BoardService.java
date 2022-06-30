@@ -25,13 +25,14 @@ public class BoardService {
     }
 
     //조회
-    public void listed() throws SQLException {
+    public ArrayList<Board> listed() throws SQLException {
 
-        common.result = dbMysql.dbListed();
+        ArrayList<Board> arrayList = dbMysql.dbListed();
 
         if(common.result == 0) {
             System.out.println("조회를 실패하였습니다.");
         }
+        return arrayList;
     }
 
     //검색

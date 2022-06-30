@@ -1,16 +1,19 @@
 package com.project.database;
 
+import com.project.board.Board;
 import com.project.board.BoardService;
 import com.project.board.Common;
 
 import java.sql.*;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import static com.project.board.Common.*;
 
 
 public class DBMysql {
+    ArrayList<Board> swingList = new ArrayList<>();
     Common common = new Common();
     public DBMysql() {
     }
@@ -57,7 +60,8 @@ public class DBMysql {
         return common.result;
     }
 
-    public int dbListed() throws SQLException {
+    public ArrayList<Board> dbListed() throws SQLException {
+
         common.result = 0;
 
         try {
@@ -70,7 +74,7 @@ public class DBMysql {
 
             resultSet = pstmt.executeQuery();
 
-            common.result = listPrint(resultSet);
+            return swingList = listPrint(resultSet);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -82,7 +86,7 @@ public class DBMysql {
                 conn.close();
             }
         }
-        return common.result;
+       return swingList;
     }
 
 
@@ -94,7 +98,7 @@ public class DBMysql {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(url, user, password);
 
-            String sql = "UPDATE boardtable SET deleted_ts = CURRENT_TIMESTAMP(), is_deleted = TRUE WHERE no = ?";
+            String sql = "UPDATE boardtable SET deleted_ts = CURRENT_TIMESTAMP(), is_deleted = TRUE WHERE board_no = ?";
 
             pstmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
@@ -127,7 +131,7 @@ public class DBMysql {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(url, user, password);
 
-            String sql = "SELECT * FROM boardtable WHERE no = ? AND is_deleted IS FALSE";
+            String sql = "SELECT * FROM boardtable WHERE board_no = ? AND is_deleted IS FALSE";
             pstmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
             pstmt.setInt(1, no);
@@ -147,7 +151,7 @@ public class DBMysql {
                     String modifiedValue = sc.next();
                     modifiedValue = common.validation(BOARD_NAME, modifiedValue);
 
-                    sql = "UPDATE boardtable SET name = ?, updated_ts = CURRENT_TIMESTAMP() WHERE no = ?";
+                    sql = "UPDATE boardtable SET name = ?, updated_ts = CURRENT_TIMESTAMP() WHERE board_no = ?";
                     pstmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
                     StringReader srName = new StringReader(modifiedValue);
@@ -164,7 +168,7 @@ public class DBMysql {
                     modifiedValue = sc.next();
 
                     modifiedValue = common.validation(BOARD_TITLE, modifiedValue);
-                    sql = "UPDATE boardtable SET title = ?,  updated_ts = CURRENT_TIMESTAMP() WHERE no = ?";
+                    sql = "UPDATE boardtable SET title = ?,  updated_ts = CURRENT_TIMESTAMP() WHERE board_no = ?";
                     pstmt = conn.prepareStatement(sql);
 
                     StringReader srTitle = new StringReader(modifiedValue);
@@ -182,7 +186,7 @@ public class DBMysql {
                     modifiedValue = sc.nextLine();
                     modifiedValue = common.validation(BOARD_CONTENT, modifiedValue);
 
-                    sql = "UPDATE boardtable SET content = ?,  updated_ts = CURRENT_TIMESTAMP() WHERE no = ?";
+                    sql = "UPDATE boardtable SET content = ?,  updated_ts = CURRENT_TIMESTAMP() WHERE board_no = ?";
 
                     pstmt = conn.prepareStatement(sql);
 
@@ -229,7 +233,7 @@ public class DBMysql {
 
                     resultSet = pstmt.executeQuery();
 
-                    common.result= listPrint(resultSet);
+                    //common.result= listPrint(resultSet);
                     break;
 
                 //제목 검색
@@ -242,7 +246,7 @@ public class DBMysql {
 
                     resultSet = pstmt.executeQuery();
 
-                    common.result = listPrint(resultSet);
+                    //common.result = listPrint(resultSet);
                     break;
 
                 //내용 검색
@@ -255,7 +259,7 @@ public class DBMysql {
 
                     resultSet = pstmt.executeQuery();
 
-                    common.result = listPrint(resultSet);
+                    //common.result = listPrint(resultSet);
                     break;
                 default:
                     break;
@@ -273,7 +277,7 @@ public class DBMysql {
         return common.result;
     }
     //print method to SELECT FROM BOARDTABLE
-    public int listPrint(ResultSet resultSet) throws SQLException {
+    public ArrayList<Board> listPrint(ResultSet resultSet) throws SQLException {
         common.result = 1;
 
         if(!resultSet.next()) {
@@ -282,13 +286,23 @@ public class DBMysql {
             resultSet.beforeFirst();
 
             while (resultSet.next()) {
-                System.out.println("고유번호 : " + resultSet.getInt("no"));
+                System.out.println("고유번호 : " + resultSet.getInt("board_no"));
                 System.out.println("작 성 자 : " + resultSet.getString("name"));
                 System.out.println("제    목 : " + resultSet.getString("title"));
                 System.out.println("내    용 : " + resultSet.getString("content"));
                 System.out.println("등록일시 : " + resultSet.getString("created_ts"));
                 System.out.println("수정일시 : " + resultSet.getString("updated_ts"));
                 System.out.println("===============================================");
+
+                Board board = new Board();
+                board.setNo(resultSet.getInt("board_no"));
+                board.setName(resultSet.getString("name"));
+                board.setTitle(resultSet.getString("title"));
+                board.setContent(resultSet.getString("content"));
+                board.setCreatedTs(resultSet.getString("created_ts"));
+                board.setUpdatedTs(resultSet.getString("updated_ts"));
+
+                swingList.add(board);
             }
         }
 
@@ -296,6 +310,6 @@ public class DBMysql {
                common.result = 0;
            }
 
-        return common.result;
+        return swingList;
     }
 }
