@@ -22,11 +22,6 @@ public class Searched extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
-
-        JScrollPane jScrollPane = new JScrollPane();
-        jScrollPane.setBounds(12, 49, 560, 189);
-        getContentPane().add(jScrollPane);
-
         String[] colNames = {"고유번호","작성자","제목","내용","등록일시","수정일시"};
         Object[][] rowDatas;
         rowDatas = new Object[arrayList.size()][colNames.length];
@@ -76,8 +71,7 @@ public class Searched extends JFrame {
                 super.mouseClicked(e);
             }
         });
-
-        jScrollPane = new JScrollPane();
+        JScrollPane jScrollPane = new JScrollPane();
         jScrollPane.setViewportView(table);
 
         JScrollPane scrollPane = new JScrollPane(table);
