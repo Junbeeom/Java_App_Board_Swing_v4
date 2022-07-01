@@ -37,48 +37,19 @@ public class BoardService {
 
     //검색
     public void searched(String type, String searchValue) throws SQLException {
-        searchValue = common.validation(type, searchValue);
+    searchValue = common.validation(type, searchValue);
+        searchValue = "%" + searchValue + "%";
+        common.result = dbMysql.dbSearched(type, searchValue);
 
-        switch (type) {
-            //이름으로 검색
-            case BOARD_NAME:
-                searchValue = "%" + searchValue + "%";
-                common.result = dbMysql.dbSearched(type, searchValue);
-
-                if(common.result == 0) {
-                    System.out.println("조회를 실패하였습니다.");
-                }
-                break;
-
-            //제목으로 검색
-            case BOARD_TITLE:
-                searchValue = "%" + searchValue + "%";
-                common.result = dbMysql.dbSearched(type, searchValue);
-
-                if(common.result == 0) {
-                    System.out.println("조회를 실패하였습니다.");
-                }
-                break;
-
-            //내용으로 검색
-            case BOARD_CONTENT:
-                searchValue = "%" + searchValue + "%";
-                common.result = dbMysql.dbSearched(type, searchValue);
-
-                if(common.result == 0) {
-                    System.out.println("조회를 실패하였습니다.");
-                }
-                break;
-
-            default:
-                break;
+        if(common.result == 0) {
+            System.out.println("조회를 실패하였습니다.");
         }
     }
 
     //수정
-    public void modified(int number) throws SQLException {
+    public void modified(int number, String title, String content, String name) throws SQLException {
 
-        common.result = dbMysql.dbUpdated(number);
+        common.result = dbMysql.dbUpdated(number, title, content, name);
 
         if(common.result == 0) {
             System.out.println("게시글이 없습니다.");

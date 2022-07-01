@@ -12,27 +12,20 @@ import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ViewMain extends JFrame {
-    public static void main(String[] args) {
-        new ViewMain();
-    }
-
-    //ViewMain 안으로 넣으면 오류가 나는데 왜그럴까?
+public class Searched extends JFrame {
     Board board = new Board();
     BoardService boardService = new BoardService();
 
-    public ViewMain() {
+    public void searched(ArrayList<Board> arrayList) {
         setTitle("게시판");
         setBounds(0,0,600,350);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        ArrayList<Board> arrayList = new ArrayList<>();
-        try {
-            arrayList = boardService.listed();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
+        JScrollPane jScrollPane = new JScrollPane();
+        jScrollPane.setBounds(12, 49, 560, 189);
+        getContentPane().add(jScrollPane);
 
         String[] colNames = {"고유번호","작성자","제목","내용","등록일시","수정일시"};
         Object[][] rowDatas;
@@ -54,7 +47,6 @@ public class ViewMain extends JFrame {
             boolean[] columnEditables = new boolean[] {
                     false, true, false, false , false, false
             };
-
             public boolean isCellEditable(int row, int column) {
                 return columnEditables[column];
             }
@@ -70,7 +62,6 @@ public class ViewMain extends JFrame {
         table.getColumnModel().getColumn(5).setResizable(false);
         table.getColumnModel().getColumn(5).setPreferredWidth(100);
 
-        //why? final을 붙여서 만들어야 할까, 그냥 arraylist.get(rowNum)이라고하면 에러가 뜬다.
         ArrayList<Board> finalArrayList = arrayList;
         table.addMouseListener(new MouseAdapter() {
             @Override
@@ -86,17 +77,16 @@ public class ViewMain extends JFrame {
             }
         });
 
-        JScrollPane jScrollPane = new JScrollPane();
+        jScrollPane = new JScrollPane();
         jScrollPane.setViewportView(table);
 
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(12,49,560,189);
         getContentPane().add(scrollPane);
 
-        //콤보박스 조건
-        JLabel labelSearch = new JLabel("검색조건"   );
-        labelSearch.setBounds(186, 20, 56, 15);
-        getContentPane().add(labelSearch);
+        JLabel jLabel = new JLabel("검색조건"   );
+        jLabel.setBounds(186, 20, 56, 15);
+        getContentPane().add(jLabel);
 
         JComboBox comboBox = new JComboBox();
         comboBox.setModel(new DefaultComboBoxModel(new String[]{"title", "content", "name"}));
@@ -119,16 +109,16 @@ public class ViewMain extends JFrame {
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
-
                 setVisible(false);
             }
         });
         getContentPane().add(jButton);
 
-        //작성 버튼
+
         JButton jButton1 = new JButton("게시글 작성");
         jButton1.setBounds(475, 248, 97, 23);
 
+        //액션리스너
         jButton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -137,10 +127,8 @@ public class ViewMain extends JFrame {
         });
         getContentPane().add(jButton1);
 
-        //갱신 버튼
         JButton jButton2 = new JButton("갱신");
         jButton2.setBounds(200, 248, 97, 23);
-
         jButton2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -151,5 +139,4 @@ public class ViewMain extends JFrame {
 
         setVisible(true);
     }
-
 }

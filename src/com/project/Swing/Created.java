@@ -1,7 +1,6 @@
 package com.project.Swing;
 
 import com.project.board.BoardService;
-import com.project.database.DBMysql;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +11,7 @@ import java.sql.SQLException;
 public class Created extends JFrame {
     BoardService boardService = new BoardService();
 
+    //공통상수로 뺀다.
     private JTextField titleArea;
     private JTextArea contentArea;
     private JTextField nameArea;
@@ -19,7 +19,6 @@ public class Created extends JFrame {
     private String userTitle;
     private String userContent;
     private String userName;
-
 
     public Created () {
         setBounds(new Rectangle(600, 0, 450, 280));
@@ -33,7 +32,7 @@ public class Created extends JFrame {
         titleArea = new JTextField("제목을 작성하세요");
         titleArea.setBounds(81, 22, 340, 21);
         getContentPane().add(titleArea);
-        //title.setColumns();
+        titleArea.setColumns(20);
 
         JLabel jLabelContent = new JLabel("내용");
         jLabelContent.setBounds(12, 59, 57, 15);
@@ -48,6 +47,7 @@ public class Created extends JFrame {
         JLabel jLabelUser = new JLabel("작성자");
         jLabelUser.setBounds(12, 140, 57, 15);
         getContentPane().add(jLabelUser);
+        titleArea.setColumns(12);
 
         nameArea = new JTextField("작성자의 이름을 입력하세요");
         nameArea.setBounds(81, 137, 116, 21);
@@ -56,18 +56,14 @@ public class Created extends JFrame {
 
         JButton jButtonCreated = new JButton("작성완료");
         jButtonCreated.setBounds(81, 180, 116, 23);
+
         jButtonCreated.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-
                 userTitle = titleArea.getText();
                 userContent = contentArea.getText();
                 userName = nameArea.getText();
-
-                System.out.println(userTitle);
-                System.out.println(userContent);
-                System.out.println(userName);
 
                 try {
                     boardService.registered(userTitle, userContent, userName);
@@ -75,15 +71,13 @@ public class Created extends JFrame {
                     ex.printStackTrace();
                     System.out.println("swing에서 걸림.");
                 }
-
-
             }
         });
-
         getContentPane().add(jButtonCreated);
 
         JButton jButtonClose = new JButton("닫기");
         jButtonClose.setBounds(209, 180, 97, 23);
+
         jButtonClose.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -93,12 +87,5 @@ public class Created extends JFrame {
         getContentPane().add(jButtonClose);
 
         setVisible(true);
-
-
-
-
-
-
-
     }
 }

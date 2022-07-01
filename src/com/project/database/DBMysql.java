@@ -1,5 +1,6 @@
 package com.project.database;
 
+import com.project.Swing.Searched;
 import com.project.board.Board;
 import com.project.board.BoardService;
 import com.project.board.Common;
@@ -8,9 +9,6 @@ import java.sql.*;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import static com.project.board.Common.*;
-
 
 public class DBMysql {
     ArrayList<Board> swingList = new ArrayList<>();
@@ -122,7 +120,7 @@ public class DBMysql {
     }
 
     //updated method to UPDATE DB
-    public int dbUpdated(int no) throws SQLException {
+    public int dbUpdated(int no, String title, String content, String name) throws SQLException {
         Scanner sc = new Scanner(System.in);
         BoardService boardService = new BoardService();
         common.result = 1;
@@ -141,65 +139,22 @@ public class DBMysql {
                 common.result = 0;
                 return  common.result;
             }
-            System.out.println("작성자 수정 1번\n제목 수정 2번\n내용 수정 3번\n취소 4번 입력");
-            int modifiedIndex = sc.nextInt();
 
-            switch (common.typeHash.get(modifiedIndex)) {
-                //이름
-                case BOARD_NAME:
-                    System.out.println("수정하실 이름을 입력하세요");
-                    String modifiedValue = sc.next();
-                    modifiedValue = common.validation(BOARD_NAME, modifiedValue);
 
-                    sql = "UPDATE boardtable SET name = ?, updated_ts = CURRENT_TIMESTAMP() WHERE board_no = ?";
-                    pstmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            sql = "UPDATE boardtable SET title = ?, content = ?, name = ?, updated_ts = CURRENT_TIMESTAMP() WHERE board_no = ?";
+            pstmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
-                    StringReader srName = new StringReader(modifiedValue);
+            StringReader srTitle = new StringReader(title);
+            StringReader srContent = new StringReader(content);
+            StringReader srName = new StringReader(name);
 
-                    pstmt.setCharacterStream(1, srName);
-                    pstmt.setInt(2, no);
+            pstmt.setCharacterStream(1, srTitle);
+            pstmt.setCharacterStream(2, srContent);
+            pstmt.setCharacterStream(3, srName);
+            pstmt.setInt(4, no);
 
-                    common.result = pstmt.executeUpdate();
-                    break;
+            common.result = pstmt.executeUpdate();
 
-                //제목
-                case BOARD_TITLE:
-                    System.out.println("수정하실 제목을 입력하세요");
-                    modifiedValue = sc.next();
-
-                    modifiedValue = common.validation(BOARD_TITLE, modifiedValue);
-                    sql = "UPDATE boardtable SET title = ?,  updated_ts = CURRENT_TIMESTAMP() WHERE board_no = ?";
-                    pstmt = conn.prepareStatement(sql);
-
-                    StringReader srTitle = new StringReader(modifiedValue);
-
-                    pstmt.setCharacterStream(1, srTitle);
-                    pstmt.setInt(2, no);
-
-                    common.result = pstmt.executeUpdate();
-                    break;
-
-                //내용
-                case BOARD_CONTENT:
-                    sc.nextLine();
-                    System.out.println("수정하실 내용을 입력하세요");
-                    modifiedValue = sc.nextLine();
-                    modifiedValue = common.validation(BOARD_CONTENT, modifiedValue);
-
-                    sql = "UPDATE boardtable SET content = ?,  updated_ts = CURRENT_TIMESTAMP() WHERE board_no = ?";
-
-                    pstmt = conn.prepareStatement(sql);
-
-                    StringReader srContent = new StringReader(modifiedValue);
-
-                    pstmt.setCharacterStream(1, srContent);
-                    pstmt.setInt(2, no);
-
-                    common.result = pstmt.executeUpdate();
-                    break;
-                default:
-                    break;
-            }
         } catch (Exception e) {
             e.printStackTrace();
 
@@ -216,54 +171,38 @@ public class DBMysql {
 
     //search method to SELECT DB
     public int dbSearched(String type, String searchedValue) throws SQLException {
+        ArrayList<Board> swingSearch = new ArrayList<Board>();
+
         common.result = 1;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(url, user, password);
 
-            switch (type) {
-                //이름 검색
-                case BOARD_NAME:
-                    String sql = "SELECT * FROM boardtable WHERE name LIKE ? AND is_deleted IS FALSE";
-                    pstmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            String sql = "SELECT * FROM boardtable WHERE " + type + " like ? AND is_deleted IS FALSE";
+            pstmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
-                    StringReader searchName = new StringReader(searchedValue);
-                    pstmt.setCharacterStream(1, searchName);
+            StringReader searchName = new StringReader(searchedValue);
+            pstmt.setCharacterStream(1, searchName);
 
-                    resultSet = pstmt.executeQuery();
+            resultSet = pstmt.executeQuery();
 
-                    //common.result= listPrint(resultSet);
-                    break;
+            while (resultSet.next()) {
+                Board board = new Board();
 
-                //제목 검색
-                case BOARD_TITLE:
-                    sql = "SELECT * FROM boardtable WHERE title LIKE ? AND is_deleted IS FALSE";
-                    pstmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                board.setNo(resultSet.getInt("board_no"));
+                board.setName(resultSet.getString("name"));
+                board.setTitle(resultSet.getString("title"));
+                board.setContent(resultSet.getString("content"));
+                board.setCreatedTs(resultSet.getString("created_ts"));
+                board.setUpdatedTs(resultSet.getString("updated_ts"));
 
-                    StringReader searchTitle = new StringReader(searchedValue);
-                    pstmt.setCharacterStream(1, searchTitle);
-
-                    resultSet = pstmt.executeQuery();
-
-                    //common.result = listPrint(resultSet);
-                    break;
-
-                //내용 검색
-                case BOARD_CONTENT:
-                    sql = "SELECT * FROM boardtable WHERE content LIKE ? AND is_deleted IS FALSE";
-                    pstmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-
-                    StringReader searchContent = new StringReader(searchedValue);
-                    pstmt.setCharacterStream(1, searchContent);
-
-                    resultSet = pstmt.executeQuery();
-
-                    //common.result = listPrint(resultSet);
-                    break;
-                default:
-                    break;
+                swingSearch.add(board);
             }
+
+            Searched searchedView = new Searched();
+            searchedView.searched(swingSearch);
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -276,12 +215,13 @@ public class DBMysql {
         }
         return common.result;
     }
+
     //print method to SELECT FROM BOARDTABLE
     public ArrayList<Board> listPrint(ResultSet resultSet) throws SQLException {
         common.result = 1;
 
         if(!resultSet.next()) {
-            System.out.println("게시물이 없습니다.");
+            System.out.println("지금 여기서? 게시물이 없습니다.");
         } else {
             resultSet.beforeFirst();
 
