@@ -14,7 +14,7 @@
 
 ---------------  S U M M A R Y ------------
 
-Command Line: -javaagent:/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar=61632:/Applications/IntelliJ IDEA.app/Contents/bin -agentpath:/private/var/folders/k6/dkc35rrd3kvf4z8xbpc5z4zh0000gn/T/libasyncProfiler.so=start,jfr,event=cpu,interval=1ms,event=alloc,file=/Users/jojunbeom/ViewMain_2022_06_29_192111.jfr -Dfile.encoding=UTF-8 com.project.Swing.ViewMain
+Command Line: -javaagent:/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar=61632:/Applications/IntelliJ IDEA.app/Contents/bin -agentpath:/private/var/folders/k6/dkc35rrd3kvf4z8xbpc5z4zh0000gn/T/libasyncProfiler.so=start,jfr,event=cpu,interval=1ms,event=alloc,file=/Users/jojunbeom/ViewMain_2022_06_29_192111.jfr -Dfile.encoding=UTF-8 com.project.Swing.View
 
 Host: MacBookAir10,1 x86_64 2400 MHz, 8 cores, 8G, Darwin 21.1.0
 Time: Wed Jun 29 19:21:12 2022 KST elapsed time: 1.284304 seconds (0d 0h 0m 1s)
@@ -606,7 +606,7 @@ Dynamic libraries:
 
 VM Arguments:
 jvm_args: -javaagent:/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar=61632:/Applications/IntelliJ IDEA.app/Contents/bin -agentpath:/private/var/folders/k6/dkc35rrd3kvf4z8xbpc5z4zh0000gn/T/libasyncProfiler.so=start,jfr,event=cpu,interval=1ms,event=alloc,file=/Users/jojunbeom/ViewMain_2022_06_29_192111.jfr -Dfile.encoding=UTF-8 
-java_command: com.project.Swing.ViewMain
+java_command: com.project.Swing.View
 java_class_path (initial): /Users/jojunbeom/Downloads/study/Java_App_Board_Swing_V4/out/production/Java_Application_Board_v2.1:/Users/jojunbeom/Downloads/study/Java_App_Board_Swing_V4/resource/lib/mysql-connector-java-8.0.29.jar
 Launcher Type: SUN_STANDARD
 

@@ -16,7 +16,7 @@
 
 ---------------  S U M M A R Y ------------
 
-Command Line: -javaagent:/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar=62748:/Applications/IntelliJ IDEA.app/Contents/bin -agentpath:/private/var/folders/k6/dkc35rrd3kvf4z8xbpc5z4zh0000gn/T/libasyncProfiler.so=start,jfr,event=cpu,interval=1ms,event=alloc,file=/Users/jojunbeom/ViewMain_2022_06_30_183208.jfr -Dfile.encoding=UTF-8 com.project.Swing.ViewMain
+Command Line: -javaagent:/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar=62748:/Applications/IntelliJ IDEA.app/Contents/bin -agentpath:/private/var/folders/k6/dkc35rrd3kvf4z8xbpc5z4zh0000gn/T/libasyncProfiler.so=start,jfr,event=cpu,interval=1ms,event=alloc,file=/Users/jojunbeom/ViewMain_2022_06_30_183208.jfr -Dfile.encoding=UTF-8 com.project.Swing.View
 
 Host: MacBookAir10,1 x86_64 2400 MHz, 8 cores, 8G, Darwin 21.1.0
 Time: Thu Jun 30 18:32:11 2022 KST elapsed time: 3.649573 seconds (0d 0h 0m 3s)
@@ -76,8 +76,8 @@ j  javax.swing.JRootPane.<init>()V+11 java.desktop@11.0.14.1
 j  javax.swing.JFrame.createRootPane()Ljavax/swing/JRootPane;+4 java.desktop@11.0.14.1
 j  javax.swing.JFrame.frameInit()V+16 java.desktop@11.0.14.1
 j  javax.swing.JFrame.<init>()V+20 java.desktop@11.0.14.1
-j  com.project.Swing.ViewMain.<init>()V+1
-j  com.project.Swing.ViewMain.main([Ljava/lang/String;)V+4
+j  com.project.Swing.View.<init>()V+1
+j  com.project.Swing.View.main([Ljava/lang/String;)V+4
 v  ~StubRoutines::call_stub
 
 siginfo: si_signo: 10 (SIGBUS), si_code: 2 (BUS_ADRERR), si_addr: 0x0000000308d74d00
@@ -866,7 +866,7 @@ Dynamic libraries:
 
 VM Arguments:
 jvm_args: -javaagent:/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar=62748:/Applications/IntelliJ IDEA.app/Contents/bin -agentpath:/private/var/folders/k6/dkc35rrd3kvf4z8xbpc5z4zh0000gn/T/libasyncProfiler.so=start,jfr,event=cpu,interval=1ms,event=alloc,file=/Users/jojunbeom/ViewMain_2022_06_30_183208.jfr -Dfile.encoding=UTF-8 
-java_command: com.project.Swing.ViewMain
+java_command: com.project.Swing.View
 java_class_path (initial): /Users/jojunbeom/Downloads/study/Java_App_Board_Swing_V4/out/production/Java_Application_Board_v2.1:/Users/jojunbeom/Downloads/study/Java_App_Board_Swing_V4/resource/lib/mysql-connector-java-8.0.29.jar
 Launcher Type: SUN_STANDARD
 

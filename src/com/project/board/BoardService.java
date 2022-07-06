@@ -1,73 +1,73 @@
 package com.project.board;
 
+import com.project.Swing.View;
 import com.project.database.DBMysql;
-import static com.project.board.Common.*;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.*;
 
 public class BoardService {
-    public BoardService() {}
-
     DBMysql dbMysql = new DBMysql();
     Common common = new Common();
 
-    //등록
-    public void registered(String userTitle, String userContent, String userName) throws SQLException {
-        common.result = dbMysql.dbCreated(userTitle, userContent, userName);
+    public BoardService() {}
 
-        if(common.result == 1) {
-            System.out.println("\n" + userName + "님의 게시글 등록이 완료 되었습니다.");
-        } else {
-            System.out.println("등록 실패 했습니다.");
+    //등록
+    public int registered(String userTitle, String userContent, String userName) throws SQLException {
+        common.COMMON_Result = dbMysql.dbCreated(userTitle, userContent, userName);
+
+        if(common.COMMON_Result == 1) {
+            // 정상등록
+            return common.COMMON_Result;
         }
+        return common.COMMON_Result;
     }
 
     //조회
-    public ArrayList<Board> listed() throws SQLException {
+    public ResultSet listed() throws SQLException {
+        ResultSet resultSet = null;
+         resultSet = dbMysql.dbListed();
 
-        ArrayList<Board> arrayList = dbMysql.dbListed();
-
-        if(common.result == 0) {
+        if(resultSet.next() == false) {
             System.out.println("조회를 실패하였습니다.");
+            resultSet.beforeFirst();
         }
-        return arrayList;
+        return resultSet;
     }
 
     //검색
     public void searched(String type, String searchValue) throws SQLException {
-    searchValue = common.validation(type, searchValue);
-        searchValue = "%" + searchValue + "%";
-        common.result = dbMysql.dbSearched(type, searchValue);
+        StringBuilder sb = new StringBuilder("%%");
+        sb.insert(1, searchValue);
 
-        if(common.result == 0) {
+        ResultSet resultSet = dbMysql.dbSearched(type, sb.toString());
+
+        if(resultSet.next() == false) {
             System.out.println("조회를 실패하였습니다.");
+            resultSet.beforeFirst();
         }
+
+        new View().searchedView(resultSet);
     }
 
     //수정
-    public void modified(int number, String title, String content, String name) throws SQLException {
+    public int modified(int number, String title, String content, String name) throws SQLException {
+        common.COMMON_Result = dbMysql.dbUpdated(number, title, content, name);
 
-        common.result = dbMysql.dbUpdated(number, title, content, name);
-
-        if(common.result == 0) {
-            System.out.println("게시글이 없습니다.");
-        } else {
-            System.out.println("게시글 수정이 완료되었습니다.");
+        if(common.COMMON_Result == 1) {
+            //정상 수정
+            return common.COMMON_Result;
         }
+        return common.COMMON_Result;
     }
 
-
     //삭제
-    public void deleted(int number) throws SQLException {
-
-        common.result = dbMysql.dbDeleted(number);
-
-        if(common.result == 1) {
-            System.out.println("게시글이 삭제되었습니다.");
-        } else {
-            System.out.println("존재하지 않는 게시글입니다.");
+    public int deleted(int number) throws SQLException {
+        common.COMMON_Result = dbMysql.dbDeleted(number);
+        if(common.COMMON_Result == 1) {
+            //정상 삭제
+            return common.COMMON_Result;
         }
+        return common.COMMON_Result;
     }
 }
