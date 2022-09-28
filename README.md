@@ -183,10 +183,12 @@ public void actionPerformed(ActionEvent e) {
 
 ### Java_App_Board_Swing_v4
 
-1. 이전 프로젝트를 진행하며 View에 대한 명확한 분리가 없었습니다. 이번 프로젝트에선 각 로직들과 Class을 효율적이고 직관적으로 관리하고 싶었기 때문에 MVC 패턴에 대해서 학습하게 되었습니다. 학습한 내용을 현재 구현 가능한 수준에서 간단하게 학습해보고자 순수 자바로 이루어진 Swing을 통해 GUI를 구현했습니다.</br></br>Swing을 통해 View를 그리며 단순히 코드를 작성해 화면을 띄우는 것이 아닌 최상위 계층에서부터 하위 계층까지 서로 긴밀하게 협력 한다는 것을 알게 되었습니다. JLabel, JTextField등을 JPanel로 감싸고, JPanel들을 JFrame이라는 최상위 컨테이너에 올려 구현하는 Swing Class 계층 구조를 학습하며 GUI를 구현하는데 큰 도움이 되었습니다.</br></br>View를 분리하고 로직들을 역할에 맞는 올바른 위치에 작성하기 까지 생각보다 많은 시간이 소요되었습니다.해당 프로젝트를 MVC패턴으로 명확하게 나눈 것도 아니였고, 단순히 View,Service,DB로만 나누었기 때문입니다. 하지만 이러한 시간을 통해 디자인 패턴의 필요성과 중요도를 알게 된 계기가 되었습니다.
+1. 해당 프로젝트에선 코드를 효율적으로 관리하고자 MVC 패턴에 대해서 학습하게 되었습니다. 학습한 내용을 현재 구현 가능한 수준에서 간단하게 학습하기 위해 Swing 이용하여 GUI를 구현하여 View로 구분했습니다.
+View를 분리하고 로직들을 올바른 위치에 작성하기까지 생각보다 많은 시간이 소요되었습니다. 하지만 이러한 시간을 통해 디자인 패턴에 대한 이해도가 높아진 계기가 되었습니다.
 
 
-2. 조회 query 실행 후 resultSet을 return 하도록 구현 했습니다. resultSet 안에 내가 필요한 데이터가 담겨 있는데 Board 객체를 만들어 Map에	 담는 행위 자체가 불 필요해 보였기 때문입니다. resultSet으로 Data를 정제 하려고 하니 원하는 Data가 제대로 산출 되지 않는 에러가 발생했습니다.</br> 이를 해결 하기 위해 ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY를 추가하여 next() Method의 커서 이동을 할 수 있게 하였습니다. 
+2. 조회 Query 실행 후 ResultSet을 return 하도록 구현 했습니다. ResultSet으로 Data를 가공 및 출력할 때 원하는 Data를 정상적으로 가져올 수 없는 이슈가 발생했습니다. 
+해당 이슈는 ResultSet의 forward only 특징 때문에 발생한 이슈였기에 TYPE_SCROLL_INSENSITIVE 옵션을 추가하여, cursor를 양방향으로 이동할 수 있게하였습니다
 
 
  
