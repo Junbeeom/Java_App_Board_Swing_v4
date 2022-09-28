@@ -15,7 +15,7 @@ public class Common extends JFrame {
                 String isKoreanCheck = "^[가-힣]*$";
                 String isAlaphaCheck = "^[a-zA-Z]*$";
 
-                if (value.matches(isKoreanCheck) || value.matches(isAlaphaCheck)) {
+                if(value.matches(isKoreanCheck) || value.matches(isAlaphaCheck)) {
                     return true;
                 } else {
                     return false;
@@ -23,7 +23,7 @@ public class Common extends JFrame {
 
             case BOARD_TITLE:
                 //제목 유효성 체크
-                if (value.length() <= 12) {
+                if(value.length() <= 12) {
                     return true;
                 } else {
                     return false;
@@ -31,7 +31,7 @@ public class Common extends JFrame {
 
             case BOARD_CONTENT:
                 //내용 유효성 체크
-                if (value.length() <= 200) {
+                if(value.length() <= 200) {
                     return true;
                 } else {
                     return false;

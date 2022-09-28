@@ -18,7 +18,7 @@ import java.sql.SQLException;
 public class View extends JFrame {
     BoardService boardService = new BoardService();
 
-    private JTextField titleArea;
+    private JTextField tittleArea;
     private JTextArea contentArea;
     private JTextField nameArea;
     private String userTitle;
@@ -54,18 +54,18 @@ public class View extends JFrame {
           }
             rowDatas = new Object[size][colNames.length];
 
-            while (resultSet.next()) {
+            while(resultSet.next()) {
                 rowDatas[i] = new Object[]{
                         resultSet.getInt("board_no"),
                         resultSet.getString("name"),
-                        resultSet.getString("title"),
+                        resultSet.getString("tittle"),
                         resultSet.getString("content"),
                         resultSet.getString("created_ts"),
                         resultSet.getString("updated_ts"),
                 };
                 i++;
             }
-        } catch (SQLException e) {
+        } catch(SQLException e) {
             e.printStackTrace();
         }
 
@@ -96,11 +96,11 @@ public class View extends JFrame {
                 int rowNum = table.getSelectedRow();
 
                 try {
-                    while (resultSet1.absolute(rowNum + 1)) {
+                    while(resultSet1.absolute(rowNum + 1)) {
                         updatedView(resultSet1);
                         break;
                     }
-                } catch (SQLException ex) {
+                } catch(SQLException ex) {
                     ex.printStackTrace();
                 }
                 super.mouseClicked(e);
@@ -118,7 +118,7 @@ public class View extends JFrame {
         getContentPane().add(labelSearch);
 
         JComboBox comboBox = new JComboBox();
-        comboBox.setModel(new DefaultComboBoxModel(new String[]{"title", "content", "name"}));
+        comboBox.setModel(new DefaultComboBoxModel(new String[]{"tittle", "content", "name"}));
         comboBox.setBounds(244, 17, 100, 21);
         getContentPane().add(comboBox);
 
@@ -137,7 +137,7 @@ public class View extends JFrame {
 
                 try {
                     boardService.searched(String.valueOf(comboBox.getSelectedItem()), searchValue.getText());
-                } catch (SQLException ex) {
+                } catch(SQLException ex) {
                     ex.printStackTrace();
                 }
 
@@ -171,10 +171,10 @@ public class View extends JFrame {
         jLabelTitle.setBounds(12,25,57,15);
         createdFrame.add(jLabelTitle);
 
-        titleArea = new JTextField("");
-        titleArea.setBounds(81, 22, 340, 21);
-        createdFrame.add(titleArea);
-        titleArea.setColumns(20);
+        tittleArea = new JTextField("");
+        tittleArea.setBounds(81, 22, 340, 21);
+        createdFrame.add(tittleArea);
+        tittleArea.setColumns(20);
 
         JLabel jLabelContent = new JLabel("내용");
         jLabelContent.setBounds(12, 59, 57, 15);
@@ -189,7 +189,7 @@ public class View extends JFrame {
         JLabel jLabelUser = new JLabel("작성자");
         jLabelUser.setBounds(12, 140, 57, 15);
         createdFrame.add(jLabelUser);
-        titleArea.setColumns(12);
+        tittleArea.setColumns(12);
 
         nameArea = new JTextField("");
         nameArea.setBounds(81, 137, 116, 21);
@@ -204,9 +204,9 @@ public class View extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
                 //제목 유효성 검사
-                userTitle = titleArea.getText();
+                userTitle = tittleArea.getText();
                 if(!common.validation(Common.BOARD_TITLE, userTitle)) {
-                    while (true) {
+                    while(true) {
                         userTitle = JOptionPane.showInputDialog(null, "제목은 12글자 이하로 입력해야 합니다.\n다시 입력하세요.", "");
 
                         if(common.validation(Common.BOARD_TITLE, userTitle)) {
@@ -218,7 +218,7 @@ public class View extends JFrame {
 
                 //내용 유효성 검사
                 if(!common.validation(Common.BOARD_CONTENT, userContent)) {
-                    while (true) {
+                    while(true) {
                         userContent = JOptionPane.showInputDialog(null, "내용은 200자 이하로 작성할 수 있습니다.\n글자수에 맞게 다시 작성하세요", "");
 
                         if(common.validation(Common.BOARD_CONTENT, userContent)) {
@@ -248,7 +248,7 @@ public class View extends JFrame {
                     } else {
                         JOptionPane.showMessageDialog(null, "등록 실패하였습니다.", "ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
                     }
-                } catch (SQLException ex) {
+                } catch(SQLException ex) {
                     ex.printStackTrace();
                 }
                 createdFrame.dispose();
@@ -284,10 +284,10 @@ public class View extends JFrame {
         jLabelTitle.setBounds(12, 25, 57, 15);
         updatedFrame.add(jLabelTitle);
 
-        titleArea = new JTextField(resultSet.getString("title"));
-        titleArea.setBounds(81, 22, 340, 21);
-        updatedFrame.add(titleArea);
-        titleArea.setColumns(20);
+        tittleArea = new JTextField(resultSet.getString("tittle"));
+        tittleArea.setBounds(81, 22, 340, 21);
+        updatedFrame.add(tittleArea);
+        tittleArea.setColumns(20);
 
         JLabel jLabelContent = new JLabel("글내용");
         jLabelContent.setBounds(12, 59, 57, 15);
@@ -318,9 +318,9 @@ public class View extends JFrame {
                 Common common = new Common();
 
                 //제목 유효성 검사
-                userTitle = titleArea.getText();
+                userTitle = tittleArea.getText();
                 if(!common.validation(Common.BOARD_TITLE, userTitle)) {
-                    while (true) {
+                    while(true) {
                         userTitle = JOptionPane.showInputDialog(null, "제목은 12글자 이하로 입력해야 합니다.\n다시 입력하세요.", "");
 
                         if(common.validation(Common.BOARD_TITLE, userTitle)) {
@@ -332,7 +332,7 @@ public class View extends JFrame {
 
                 //내용 유효성 검사
                 if(!common.validation(Common.BOARD_CONTENT, userContent)) {
-                    while (true) {
+                    while(true) {
                         userContent = JOptionPane.showInputDialog(null, "내용은 200자 이하로 작성할 수 있습니다.\n글자수에 맞게 다시 작성하세요", "");
 
                         if(common.validation(Common.BOARD_CONTENT, userContent)) {
@@ -344,7 +344,7 @@ public class View extends JFrame {
 
                 //이름 유효성 검사
                 if(!common.validation(Common.BOARD_NAME, userName)) {
-                    while (true) {
+                    while(true) {
                         userName = JOptionPane.showInputDialog(null, "이름을 올바른 형식으로 입력하세요\n한글 및 영어만 가능합니다.", "");
 
                         if(common.validation(Common.BOARD_NAME, userName)) {
@@ -392,7 +392,7 @@ public class View extends JFrame {
                         new View().revalidate();
                         new View().repaint();
                     }
-                } catch (SQLException ex) {
+                } catch(SQLException ex) {
                     ex.printStackTrace();
                 }
             }
@@ -441,18 +441,18 @@ public class View extends JFrame {
 
             rowDatas = new Object[size][colNames.length];
 
-            while (resultSet.next()) {
+            while(resultSet.next()) {
                 rowDatas[i] = new Object[]{
                         resultSet.getInt("board_no"),
                         resultSet.getString("name"),
-                        resultSet.getString("title"),
+                        resultSet.getString("tittle"),
                         resultSet.getString("content"),
                         resultSet.getString("created_ts"),
                         resultSet.getString("updated_ts"),
                 };
                 i++;
             }
-        } catch (SQLException e) {
+        } catch(SQLException e) {
             e.printStackTrace();
         }
 
@@ -488,7 +488,7 @@ public class View extends JFrame {
                         break;
                     }
 
-                } catch (SQLException ex) {
+                } catch(SQLException ex) {
                     ex.printStackTrace();
                 }
                 super.mouseClicked(e);
@@ -506,7 +506,7 @@ public class View extends JFrame {
         searchedFrame.add(jLabel);
 
         JComboBox comboBox = new JComboBox();
-        comboBox.setModel(new DefaultComboBoxModel(new String[]{"title", "content", "name"}));
+        comboBox.setModel(new DefaultComboBoxModel(new String[]{"tittle", "content", "name"}));
         comboBox.setBounds(244, 17, 100, 21);
         searchedFrame.add(comboBox);
 
@@ -523,7 +523,7 @@ public class View extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     boardService.searched(String.valueOf(comboBox.getSelectedItem()), searchValue.getText());
-                } catch (SQLException ex) {
+                } catch(SQLException ex) {
                     ex.printStackTrace();
                 }
                 setVisible(false);
