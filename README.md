@@ -22,13 +22,24 @@
 ### 4.1 main View
 <img width="626" alt="스크린샷 2022-09-28 오후 2 21 00" src="https://user-images.githubusercontent.com/103010985/192696703-94fd0401-3b6b-4493-b887-6d729bce5abc.png">
 
+### 4.2 등록하기
+<img width="479" alt="스크린샷 2022-09-28 오후 2 21 21" src="https://user-images.githubusercontent.com/103010985/192697541-f3fb415c-8e88-4a00-a669-579d51088c66.png">
+
+### 4.3 수정 및 삭제하기
+<img width="532" alt="스크린샷 2022-09-28 오후 2 46 44" src="https://user-images.githubusercontent.com/103010985/192697921-f9a2e0c7-7adb-4697-971b-06b7f0095e1d.png">
+
+### 4.3 검색하기
+<img width="306" alt="스크린샷 2022-09-28 오후 2 22 17" src="https://user-images.githubusercontent.com/103010985/192698047-8765609d-b566-48c5-a101-3924825ea620.png">
+
 
 
 ### 4.1 board 패키지
-<img width="385" alt="스크린샷 2022-09-28 오후 1 48 23" src="https://user-images.githubusercontent.com/103010985/192689931-e5a04c63-cdd8-475b-ab93-f4e437d0def6.png">
+
+<img width="333" alt="스크린샷 2022-09-28 오후 2 50 47" src="https://user-images.githubusercontent.com/103010985/192698248-8e23b5f0-ee16-4bec-9aec-0894b71d5022.png">
+
 
 ### 4.2 database 패키지
-<img width="342" alt="스크린샷 2022-09-28 오후 1 48 56" src="https://user-images.githubusercontent.com/103010985/192689996-ad96eb78-a5c1-486d-a5a1-0520ea7f2105.png">
+<img width="331" alt="스크린샷 2022-09-28 오후 2 51 23" src="https://user-images.githubusercontent.com/103010985/192698376-dd0a25e2-af6d-41af-b8ca-474ae2372f42.png">
 
 
 # 5.기본 기능
